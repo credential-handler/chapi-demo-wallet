@@ -56,7 +56,7 @@
 
     // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
     document.getElementById('hintKey').innerHTML = credential.hintKey || '';
-    document.getElementById('credentialContents').innerHTML = credential.data;
+    document.getElementById('credentialContents').innerHTML = JSON.stringify(credential.data, null, 2);
 
     // Return Success button
     document.getElementById('successBtn').addEventListener('click', () => {

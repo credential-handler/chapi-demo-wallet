@@ -30,6 +30,11 @@
       browser, and now it can act as a test wallet.
     </p>
 
+    <p>
+      <strong>Logged in:</strong>
+      <span id="username"></span>
+    </p>
+
     <a class="waves-effect waves-light btn" id="loginButton">Login</a>
 
     <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
@@ -44,15 +49,24 @@
   ready(() => {
     document.getElementById('loginButton').addEventListener('click', login);
     document.getElementById('logoutButton').addEventListener('click', logout);
-    console.log('Wallet ready..')
+    refreshUsername();
+    console.log('Wallet ready..');
   })
 
+  function refreshUsername() {
+    document.getElementById('username').innerHTML = Cookies.get('username') || '';
+  }
+
   function login() {
+    console.log('Setting login cookie.')
     Cookies.set('username', 'JaneDoe', { path: '' })
+    refreshUsername();
   }
 
   function logout() {
-    Cookies.remove('username')
+    console.login('Clearing login cookie.')
+    Cookies.remove('username', { path: '' })
+    refreshUsername();
   }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
