@@ -7,7 +7,7 @@
 const workerUrl = WALLET_LOCATION + 'worker.html'
 
 async function installHandler() {
-  console.log('Loading polyfill...');
+  console.log('Loading polyfill... workerUrl:', workerUrl);
 
   try {
     await credentialHandlerPolyfill.loadOnce(MEDIATOR);
@@ -24,8 +24,8 @@ async function installHandler() {
   await registration.credentialManager.hints.set(
     'test', {
       name: 'TestUser',
-      // enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
-      enabledTypes: ['VerifiablePresentation']
+      enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
+      // enabledTypes: ['VerifiablePresentation']
     });
 }
 
