@@ -59,7 +59,7 @@
 
   function login() {
     console.log('Setting login cookie.')
-    Cookies.set('username', 'JaneDoe', { path: '' })
+    Cookies.set('username', 'JaneDoe', { path: '', secure: true, sameSite: 'None' })
     refreshUsername();
   }
 
