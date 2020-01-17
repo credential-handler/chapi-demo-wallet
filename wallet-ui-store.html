@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
 
   <script src="config.js"></script>
+  <script src="login.js"></script>
 
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
@@ -33,6 +34,7 @@
   <div class="row">
     <div class="col s7">
       <strong>logged in:</strong> <span id="username"></span>
+      <a class="waves-effect waves-light btn" id="loginButton">Login</a>
     </div>
     <div class="col s5">
       <strong>hint key:</strong> <code id="hintKey"></code>
@@ -72,6 +74,19 @@
       }))
     });
   }
+
+  function ready(fn) {
+    if (document.readyState !== 'loading'){
+      fn();
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+
+  ready(() => {
+    document.getElementById('loginButton').addEventListener('click', login);
+    refreshUsername();
+  })
 
   credentialHandlerPolyfill.loadOnce(MEDIATOR).then(handleStoreEvent);
 </script>

@@ -16,6 +16,7 @@
 
   <script src="config.js"></script>
   <script src="install-wallet.js"></script>
+  <script src="login.js"></script>
 
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
@@ -52,22 +53,6 @@
     refreshUsername();
     console.log('Wallet ready..');
   })
-
-  function refreshUsername() {
-    document.getElementById('username').innerHTML = Cookies.get('username') || '';
-  }
-
-  function login() {
-    console.log('Setting login cookie.')
-    Cookies.set('username', 'JaneDoe', { path: '', secure: true, sameSite: 'None' })
-    refreshUsername();
-  }
-
-  function logout() {
-    console.log('Clearing login cookie.')
-    Cookies.remove('username', { path: '' })
-    refreshUsername();
-  }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
