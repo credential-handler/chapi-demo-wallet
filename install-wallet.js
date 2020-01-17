@@ -4,10 +4,7 @@
 /* global navigator, window, document */
 'use strict';
 
-const workerUrl = 'https://digitalbazaar.github.io/chapi-demo-wallet/worker.html'
-
-const MEDIATOR = 'https://beta.authn.io/mediator' + '?origin=' +
-  encodeURIComponent(window.location.origin);
+const workerUrl = WALLET_LOCATION + 'worker.html'
 
 async function installHandler() {
   console.log('Loading polyfill...');

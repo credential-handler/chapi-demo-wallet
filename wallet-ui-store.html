@@ -12,6 +12,8 @@
   <script src="https://unpkg.com/credential-handler-polyfill@2.1.1/dist/credential-handler-polyfill.min.js"></script>
   <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
 
+  <script src="config.js"></script>
+
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 </head>
@@ -69,8 +71,6 @@
     });
   }
 
-  const MEDIATOR = 'https://beta.authn.io/mediator' + '?origin=' +
-    encodeURIComponent(window.location.origin);
   credentialHandlerPolyfill.loadOnce(MEDIATOR).then(handleStoreEvent);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
