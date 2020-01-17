@@ -22,7 +22,7 @@
 <div class="container">
   <div class="row">
     <div class="col s7">
-      <h5>store() event</h5>
+      <h5>Wallet store() event</h5>
     </div>
     <div class="col s5">
       Reply:<br/>
@@ -32,7 +32,7 @@
   </div>
   <div class="row">
     <div class="col s7">
-      <strong>from:</strong> <code id="requestOrigin"></code>
+      <strong>logged in:</strong> <span id="username"></span>
     </div>
     <div class="col s5">
       <strong>hint key:</strong> <code id="hintKey"></code>
@@ -52,7 +52,9 @@
 
     const credential = event.credential || {};
 
-    document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
+    document.getElementById('username').innerHTML = Cookies.get('username') || '';
+
+    // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
     document.getElementById('hintKey').innerHTML = credential.hintKey || '';
     document.getElementById('credentialContents').innerHTML = credential.data;
 
