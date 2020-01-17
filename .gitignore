@@ -1,0 +1,13 @@
+*.sw[nop]
+*~
+.cache
+.project
+.settings
+TAGS
+bower_components
+coverage
+dist
+node_modules
+npm-debug.log
+reports
+.acl

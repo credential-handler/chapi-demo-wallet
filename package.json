@@ -1,0 +1,28 @@
+{
+  "name": "chapi-demo-wallet",
+  "version": "0.0.0",
+  "description": "Credential Handler API Demo Issuer",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/chapi-demo-wallet.git"
+  },
+  "author": {
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "http://digitalbazaar.com"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/chapi-demo-wallet/issues"
+  },
+  "homepage": "https://github.com/digitalbazaar/chapi-demo-wallet",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "files": [
+  ],
+  "scripts": {
+  }
+}

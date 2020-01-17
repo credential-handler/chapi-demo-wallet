@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Minimal Dev Wallet - Wallet Store UI</title>
+  <meta charset="utf-8">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified Materialize JS/CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <script src="https://unpkg.com/credential-handler-polyfill@2.1.1/dist/credential-handler-polyfill.min.js"></script>
+  <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
+
+  <!--Simple cookie lib-->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <h5>Wallet UI (demo)</h5>
+
+      <p>As an Issuer, you have no control over what this UI looks like.</p>
+
+      <h6>Would you like to store this Credential?</h6>
+      <p>
+        When the user is issued a credential, the wallet confirms this operation
+        with the user.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function handleWalletReceiveEvent() {
+    const event = await WebCredentialHandler.receiveCredentialEvent();
+
+    console.log('Received event:', event);
+
+    const requestOptions = event.credentialRequestOptions || {web:{}};
+
+    // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
+    // document.getElementById('queryContents').innerHTML = JSON.stringify(requestOptions.web, null, 2);
+
+    // Respond button
+    document.getElementById('respondBtn').addEventListener('click', () => {
+      const data = JSON.parse(document.getElementById('responseText').value);
+
+      event.respondWith(Promise.resolve({dataType: 'VerifiableCredential', data}));
+    });
+
+    // Cancel button
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      event.respondWith(Promise.resolve({dataType: 'Response', data: 'error'}))
+    });
+  }
+
+  const MEDIATOR = 'https://beta.authn.io/mediator' + '?origin=' +
+    encodeURIComponent(window.location.origin);
+  credentialHandlerPolyfill.loadOnce(MEDIATOR).then(handleWalletReceiveEvent);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

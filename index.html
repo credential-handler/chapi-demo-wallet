@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Minimal Demo Wallet</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified Materialize JS/CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!--Credential Handler API Polyfill-->
+  <script src="https://unpkg.com/credential-handler-polyfill@2.1.1/dist/credential-handler-polyfill.min.js"></script>
+  <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
+
+  <script src="install-wallet.js"></script>
+
+  <!--Simple cookie lib-->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="card-panel">
+    <h5>Demo Wallet</h5>
+    <p>
+      By clicking 'Accept' on page load, you have registered this page with your
+      browser, and now it can act as a test wallet.
+    </p>
+
+    <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+
+    <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
+  </div>
+</div>
+
+<script>
+  console.log('Installing...')
+  installHandler()
+    .catch(e => console.error('Error in installHandler:', e));
+
+  ready(() => {
+    document.getElementById('loginButton').addEventListener('click', login);
+    document.getElementById('logoutButton').addEventListener('click', logout);
+    console.log('Wallet ready..')
+  })
+
+  function login() {
+    Cookies.set('username', 'JaneDoe', { path: '' })
+  }
+
+  function logout() {
+    Cookies.remove('username')
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
