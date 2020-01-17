@@ -17,9 +17,10 @@
       console.error('Error in loadOnce:', e);
     }
 
-    console.log('Worker Polyfill loaded.');
+    console.log('Worker Polyfill loaded, mediator:', MEDIATOR);
 
     return WebCredentialHandler.activateHandler({
+      mediatorOrigin: MEDIATOR,
       async get(event) {
         console.log('WCH: Received get() event:', event);
         return {type: 'redirect', url: WALLET_LOCATION + 'wallet-ui-receive.html'};
