@@ -34,6 +34,8 @@ async function registerWalletWithBrowser() {
 
   console.log('Polyfill loaded.');
 
+  console.log('Installing wallet worker handler at:', workerUrl);
+
   const registration = await WebCredentialHandler.installHandler({url: workerUrl});
 
   await registration.credentialManager.hints.set(
