@@ -44,9 +44,10 @@
 </div>
 
 <script>
-  console.log('Registering wallet...')
+  console.log('Registering wallet...');
 
-  // Registers this demo wallet with the current user's browser
+  // Registers this demo wallet with the current user's browser,
+  // from install-wallet.js
   registerWalletWithBrowser()
     .catch(e => console.error('Error in registerWalletWithBrowser:', e));
 

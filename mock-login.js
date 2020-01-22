@@ -8,13 +8,13 @@ function refreshUsername() {
 }
 
 function login() {
-  console.log('Setting login cookie.')
-  Cookies.set('username', 'JaneDoe', { path: '', secure: true, sameSite: 'None' })
+  console.log('Setting login cookie.');
+  Cookies.set('username', 'JaneDoe', { path: '', secure: true, sameSite: 'None' });
   refreshUsername();
 }
 
 function logout() {
-  console.log('Clearing login cookie.')
-  Cookies.remove('username', { path: '' })
+  console.log('Clearing login cookie.');
+  Cookies.remove('username', { path: '' });
   refreshUsername();
 }

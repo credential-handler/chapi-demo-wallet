@@ -23,7 +23,7 @@
  *      implementors.
  */
 
-const workerUrl = WALLET_LOCATION + 'worker.html'
+const workerUrl = WALLET_LOCATION + 'worker.html';
 
 async function registerWalletWithBrowser() {
   try {
@@ -42,4 +42,6 @@ async function registerWalletWithBrowser() {
       enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
       // enabledTypes: ['VerifiablePresentation']
     });
+
+  console.log('Wallet registered.');
 }
