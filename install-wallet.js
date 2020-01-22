@@ -26,8 +26,6 @@
 const workerUrl = WALLET_LOCATION + 'worker.html'
 
 async function registerWalletWithBrowser() {
-  console.log('Loading polyfill... workerUrl:', workerUrl);
-
   try {
     await credentialHandlerPolyfill.loadOnce(MEDIATOR);
   } catch(e) {
