@@ -10,7 +10,7 @@
 <body>
 
 <script>
-  async function activateHandler() {
+  async function activateWalletEventHandler() {
     try {
       await credentialHandlerPolyfill.loadOnce(MEDIATOR);
     } catch(e) {
@@ -33,7 +33,7 @@
   }
 
   console.log('worker.html: Activating handler, WALLET_LOCATION:', WALLET_LOCATION);
-  activateHandler();
+  activateWalletEventHandler();
 </script>
 </body>
 </html>

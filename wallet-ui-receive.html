@@ -40,10 +40,9 @@
   async function handleWalletReceiveEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
 
-    console.log('Received event:', event);
+    console.log('Wallet processing store() event:', event);
 
-    const requestOptions = event.credentialRequestOptions || {web:{}};
-
+    // const requestOptions = event.credentialRequestOptions || {web:{}};
     // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
     // document.getElementById('queryContents').innerHTML = JSON.stringify(requestOptions.web, null, 2);
 

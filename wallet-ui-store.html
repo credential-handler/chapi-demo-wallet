@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
 
   <script src="config.js"></script>
+  <script src="js-helpers.js"></script>
   <script src="login.js"></script>
 
   <!--Simple cookie lib-->
@@ -46,6 +47,19 @@
 </div>
 
 <script>
+  /**
+   * Globals:
+   *  * credentialHandlerPolyfill - from credential-handler-polyfill.min.js.
+   *      This provides the get() and store() Credential Handler API calls.
+   *
+   *  * WebCredentialHandler - from web-credential-handler.min.js.
+   *      Utility/convenience library for the CHAPI polyfill, useful for wallet
+   *      implementors.
+   *
+   *  * Cookies - from js.cookie.min.js.
+   *      Minimal in-browser cookie handling library (used for persistence).
+   */
+
   async function handleStoreEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
     // event.type is: 'credentialstore'
@@ -75,15 +89,7 @@
     });
   }
 
-  function ready(fn) {
-    if (document.readyState !== 'loading'){
-      fn();
-    } else {
-      document.addEventListener('DOMContentLoaded', fn);
-    }
-  }
-
-  ready(() => {
+  onDocumentReady(() => {
     document.getElementById('loginButton').addEventListener('click', login);
     refreshUsername();
   })

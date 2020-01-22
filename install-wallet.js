@@ -1,12 +1,31 @@
 /*!
- * Copyright (c) 2019 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2020 Digital Bazaar, Inc. All rights reserved.
  */
 /* global navigator, window, document */
 'use strict';
 
+/**
+ * Helper function for registering a wallet with the user's browser.
+ *
+ * NOTE: Only needed for implementors of custom wallets; client code that just
+ * wants to receive and verify credentials does not need to do this.
+ *
+ * This script is loaded in ./index.html.
+ *
+ * Globals:
+ *   WALLET_LOCATION - from local config.js
+ *   MEDIATOR - from local config.js
+ *
+ *   credentialHandlerPolyfill - from credential-handler-polyfill.min.js script.
+ *
+ *   WebCredentialHandler - from web-credential-handler.min.js.
+ *      Utility/convenience library for the CHAPI polyfill, useful for wallet
+ *      implementors.
+ */
+
 const workerUrl = WALLET_LOCATION + 'worker.html'
 
-async function installHandler() {
+async function registerWalletWithBrowser() {
   console.log('Loading polyfill... workerUrl:', workerUrl);
 
   try {
@@ -16,10 +35,8 @@ async function installHandler() {
   }
 
   console.log('Polyfill loaded.');
-  // document.getElementById('loadingText').innerHTML = 'Polyfill loaded.';
 
-  const registration = await WebCredentialHandler
-    .installHandler({url: workerUrl})
+  const registration = await WebCredentialHandler.installHandler({url: workerUrl});
 
   await registration.credentialManager.hints.set(
     'test', {
@@ -27,12 +44,4 @@ async function installHandler() {
       enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
       // enabledTypes: ['VerifiablePresentation']
     });
-}
-
-function ready(fn) {
-  if (document.readyState !== 'loading'){
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
 }

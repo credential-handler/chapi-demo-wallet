@@ -15,6 +15,7 @@
   <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
 
   <script src="config.js"></script>
+  <script src="js-helpers.js"></script>
   <script src="install-wallet.js"></script>
   <script src="login.js"></script>
 
@@ -43,16 +44,20 @@
 </div>
 
 <script>
-  console.log('Installing...')
-  installHandler()
-    .catch(e => console.error('Error in installHandler:', e));
+  console.log('Registering wallet...')
 
-  ready(() => {
+  // Registers this demo wallet with the current user's browser
+  registerWalletWithBrowser()
+    .catch(e => console.error('Error in registerWalletWithBrowser:', e));
+
+  // Set up the UI / button events.
+  // `onDocumentReady` helper function is defined in ./js-helpers.js
+  onDocumentReady(() => {
     document.getElementById('loginButton').addEventListener('click', login);
     document.getElementById('logoutButton').addEventListener('click', logout);
     refreshUsername();
     console.log('Wallet ready..');
-  })
+  });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
