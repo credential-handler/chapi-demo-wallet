@@ -23,7 +23,7 @@
  *      implementors.
  */
 
-const workerUrl = WALLET_LOCATION + 'worker.html';
+const workerUrl = WALLET_LOCATION + 'wallet-worker.html';
 
 async function registerWalletWithBrowser() {
   try {
