@@ -32,14 +32,20 @@
       browser, and now it can act as a test wallet.
     </p>
 
-    <p>
-      <strong>Logged in:</strong>
-      <span id="username"></span>
-    </p>
+    <div class="card-panel hide" id="logged-in">
+      <p>
+        <strong>Logged in:</strong>
+        <span id="username"></span>
+      </p>
+      <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
+    </div>
 
-    <a class="waves-effect waves-light btn" id="loginButton">Login</a>
-
-    <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
+    <div class="card-panel hide" id="logged-out">
+      <p>
+        You are not logged in.
+      </p>
+      <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+    </div>
   </div>
 </div>
 

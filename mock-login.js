@@ -4,7 +4,17 @@
 'use strict'
 
 function refreshUsername() {
-  document.getElementById('username').innerHTML = Cookies.get('username') || '';
+  const currentUser = Cookies.get('username') || '';
+  document.getElementById('username').innerHTML = currentUser;
+
+  if(currentUser) {
+    document.getElementById('logged-in').classList.remove('hide');
+    document.getElementById('logged-out').classList.add('hide');
+  } else {
+    // not logged in
+    document.getElementById('logged-in').classList.add('hide');
+    document.getElementById('logged-out').classList.remove('hide');
+  }
 }
 
 function login() {

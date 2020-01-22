@@ -34,8 +34,20 @@
   </div>
   <div class="row">
     <div class="col s7">
-      <strong>logged in:</strong> <span id="username"></span>
-      <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+      <div class="card-panel hide" id="logged-in">
+        <p>
+          <strong>Logged in:</strong>
+          <span id="username"></span>
+        </p>
+        <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
+      </div>
+
+      <div class="card-panel hide" id="logged-out">
+        <p>
+          You are not logged in.
+        </p>
+        <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+      </div>
     </div>
     <div class="col s5">
       <strong>hint key:</strong> <code id="hintKey"></code>
@@ -91,6 +103,7 @@
 
   onDocumentReady(() => {
     document.getElementById('loginButton').addEventListener('click', login);
+    document.getElementById('logoutButton').addEventListener('click', logout);
     refreshUsername();
   })
 
