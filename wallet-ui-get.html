@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Minimal Dev Wallet - Wallet Store UI</title>
+  <title>Minimal Dev Wallet - Wallet Get UI</title>
   <meta charset="utf-8">
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,6 +13,7 @@
   <script src="https://unpkg.com/web-credential-handler@1.0.1/dist/web-credential-handler.min.js"></script>
 
   <script src="config.js"></script>
+  <script src="js-helpers.js"></script>
   <script src="mock-login.js"></script>
 
   <!--Simple cookie lib-->
@@ -23,24 +24,31 @@
 <div class="container">
   <div class="row">
     <div class="col s12">
-      <h5>Wallet UI (demo)</h5>
+      <h5>Wallet Get UI (demo)</h5>
 
-      <p>As an Issuer, you have no control over what this UI looks like.</p>
-
-      <h6>Would you like to store this Credential?</h6>
-      <p>
-        When the user is issued a credential, the wallet confirms this operation
-        with the user.
-      </p>
+      <h6>Would you like to share this Credential?</h6>
     </div>
   </div>
 </div>
 
 <script>
-  async function handleWalletReceiveEvent() {
+  /**
+   * Globals:
+   *  * credentialHandlerPolyfill - from credential-handler-polyfill.min.js.
+   *      This provides the get() and store() Credential Handler API calls.
+   *
+   *  * WebCredentialHandler - from web-credential-handler.min.js.
+   *      Utility/convenience library for the CHAPI polyfill, useful for wallet
+   *      implementors.
+   *
+   *  * Cookies - from js.cookie.min.js.
+   *      Minimal in-browser cookie handling library (used for persistence).
+   */
+
+  async function handleGetEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
 
-    console.log('Wallet processing store() event:', event);
+    console.log('Wallet processing get() event:', event);
 
     // const requestOptions = event.credentialRequestOptions || {web:{}};
     // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
@@ -50,7 +58,7 @@
     document.getElementById('respondBtn').addEventListener('click', () => {
       const data = JSON.parse(document.getElementById('responseText').value);
 
-      event.respondWith(Promise.resolve({dataType: 'VerifiableCredential', data}));
+      event.respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data}));
     });
 
     // Cancel button
@@ -59,9 +67,15 @@
     });
   }
 
+  onDocumentReady(() => {
+    document.getElementById('loginButton').addEventListener('click', login);
+    document.getElementById('logoutButton').addEventListener('click', logout);
+    refreshUsername();
+  })
+
   credentialHandlerPolyfill
     .loadOnce(MEDIATOR)
-    .then(handleWalletReceiveEvent);
+    .then(handleGetEvent);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>

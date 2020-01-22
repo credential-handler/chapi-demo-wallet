@@ -23,7 +23,7 @@
       mediatorOrigin: MEDIATOR,
       async get(event) {
         console.log('WCH: Received get() event:', event);
-        return {type: 'redirect', url: WALLET_LOCATION + 'wallet-ui-receive.html'};
+        return {type: 'redirect', url: WALLET_LOCATION + 'wallet-ui-get.html'};
       },
       async store(event) {
         console.log('WCH: Received store() event:', event);
