@@ -28,6 +28,10 @@
     <div id="confirm">
       <p>Do you wish to store this credential?</p>
 
+      <p><strong>type:</strong> <span id="credentialType"></span></p>
+
+      <p><strong>issuer:</strong> <span id="credentialIssuer"></span></p>
+
       <a class="waves-effect waves-light btn" id="confirmButton">Confirm</a>
       <a class="waves-effect waves-light btn" id="cancelButton">Cancel</a>
     </div>
@@ -73,8 +77,6 @@
 
   async function handleStoreEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
-    // event.type is: 'credentialstore'
-
     console.log('Store Credential Event:', event.type, event);
 
     const credential = event.credential;
@@ -83,10 +85,18 @@
     // document.getElementById('hintKey').innerHTML = credential.hintKey || '';
     // document.getElementById('credentialContents').innerHTML = JSON.stringify(credential.data, null, 2);
 
+    // Display the credential details, for confirmation
+    const vp = credential.data;
+    const vc = Array.isArray(vp.verifiableCredential)
+      ? vp.verifiableCredential[0]
+      : vp.verifiableCredential;
+    document.getElementById('credentialType').innerHTML = getCredentialType(vc);
+    document.getElementById('credentialIssuer').innerHTML = vc.issuer;
+
+    // Set up the event handlers for the buttons
     document.getElementById('cancelButton').addEventListener('click', () => {
       returnToUser(event); // Do nothing, close the CHAPI window
     });
-
     document.getElementById('confirmButton').addEventListener('click', () => {
       document.getElementById('userArea').classList.remove('hide');
       document.getElementById('confirm').classList.add('hide');
