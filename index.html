@@ -17,7 +17,7 @@
   <script src="config.js"></script>
   <script src="js-helpers.js"></script>
   <script src="install-wallet.js"></script>
-  <script src="mock-login.js"></script>
+  <script src="mock-user-management.js"></script>
 
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
@@ -36,8 +36,8 @@
       <p>
         <strong>Logged in:</strong> <span id="username"></span>
 
-        <h6>Stored Credentials:</h6>
-        <ul id="credentialsList"></ul>
+        <h6>Wallet Contents:</h6>
+        <ol id="walletContents"></ol>
       </p>
       <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
     </div>

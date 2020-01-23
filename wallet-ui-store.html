@@ -14,7 +14,7 @@
 
   <script src="config.js"></script>
   <script src="js-helpers.js"></script>
-  <script src="mock-login.js"></script>
+  <script src="mock-user-management.js"></script>
 
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
@@ -35,8 +35,8 @@
     <div id="userArea" class="hide">
       <p><strong>Logged in:</strong> <span id="username"></span></p>
 
-      <h6>Stored Credentials:</h6>
-      <ul id="credentialsList"></ul>
+      <h6>Wallet Contents:</h6>
+      <ol id="walletContents"></ol>
 
       <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
     </div>
@@ -91,7 +91,7 @@
       document.getElementById('userArea').classList.remove('hide');
       document.getElementById('confirm').classList.add('hide');
 
-      storeCredential(credential);
+      storeInWallet(credential.data); // in mock-user-management.js
       refreshUserArea();
     });
   }
