@@ -26,15 +26,15 @@
 
   <div class="card-panel hide" id="logged-in">
     <div id="confirm">
-      <p>Origin <span id="originName"></span> is requesting a credential:</p>
+      <p>Origin <span id="requestOrigin"></span> is requesting information.</p>
 
-      <p><strong>type:</strong> <span id="credentialType"></span></p>
+      <p><strong>Credential type:</strong> <span id="credentialType"></span></p>
 
     </div>
 
     <div id="userArea" class="hide">
       <p><strong>Logged in:</strong> <span id="username"></span></p>
-      <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
+      <a class="waves-effect waves-light btn-small" id="logoutButton">Reset and Logout</a>
 
       <h6>Wallet Contents:</h6>
       <ol id="walletContents"></ol>
@@ -75,8 +75,15 @@
 
     console.log('Wallet processing get() event:', event);
 
+    document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
+
+    const vp = event.credential.data;
+    const vc = Array.isArray(vp.verifiableCredential)
+      ? vp.verifiableCredential[0]
+      : vp.verifiableCredential;
+    document.getElementById('credentialType').innerHTML = getCredentialType(vc);
+
     // const requestOptions = event.credentialRequestOptions || {web:{}};
-    // document.getElementById('requestOrigin').innerHTML = event.credentialRequestOrigin;
     // document.getElementById('queryContents').innerHTML = JSON.stringify(requestOptions.web, null, 2);
 
     // Respond button
