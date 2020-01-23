@@ -22,12 +22,38 @@
 <body>
 
 <div class="container">
-  <div class="row">
-    <div class="col s12">
-      <h5>Wallet Get UI (demo)</h5>
+  <h5>Wallet get() event</h5>
 
-      <h6>Would you like to share this Credential?</h6>
+  <div class="card-panel hide" id="logged-in">
+    <div id="confirm">
+      <p>Origin <span id="originName"></span> is requesting a credential:</p>
+
+      <p><strong>type:</strong> <span id="credentialType"></span></p>
+
     </div>
+
+    <div id="userArea" class="hide">
+      <p><strong>Logged in:</strong> <span id="username"></span></p>
+      <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
+
+      <h6>Wallet Contents:</h6>
+      <ol id="walletContents"></ol>
+    </div>
+  </div>
+
+  <div class="card-panel hide" id="logged-out">
+    <p>
+      In order to share a credential with the requesting party:
+    </p>
+
+    <ol>
+      <li>Register a wallet with your browser (for example,
+        the <a href="https://chapi-demo-wallet.digitalbazaar.com/">Demo Wallet</a>).</li>
+      <li>Click the <strong>Login</strong> button.</li>
+      <li>Click on a Share button next to an appropriate credential.</li>
+    </ol>
+
+    <a class="waves-effect waves-light btn" id="loginButton">Login</a>
   </div>
 </div>
 
@@ -54,16 +80,16 @@
     // document.getElementById('queryContents').innerHTML = JSON.stringify(requestOptions.web, null, 2);
 
     // Respond button
-    document.getElementById('respondBtn').addEventListener('click', () => {
-      const data = JSON.parse(document.getElementById('responseText').value);
-
-      event.respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data}));
-    });
+    // document.getElementById('respondBtn').addEventListener('click', () => {
+    //   const data = JSON.parse(document.getElementById('responseText').value);
+    //
+    //   event.respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data}));
+    // });
 
     // Cancel button
-    document.getElementById('cancelBtn').addEventListener('click', () => {
-      event.respondWith(Promise.resolve({dataType: 'Response', data: 'error'}))
-    });
+    // document.getElementById('cancelBtn').addEventListener('click', () => {
+    //   event.respondWith(Promise.resolve({dataType: 'Response', data: 'error'}))
+    // });
   }
 
   onDocumentReady(() => {
