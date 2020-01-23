@@ -38,12 +38,14 @@
 
     <div id="userArea" class="hide">
       <p><strong>Logged in:</strong> <span id="username"></span></p>
-      <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
+      <a class="waves-effect waves-light btn-small" id="logoutButton">Reset and Logout</a>
 
       <p><strong>Credential stored!</strong></p>
 
       <h6>Wallet Contents:</h6>
       <ol id="walletContents"></ol>
+
+      <a class="waves-effect waves-light btn center" id="doneButton">Done</a>
     </div>
   </div>
 
@@ -97,12 +99,17 @@
     document.getElementById('cancelButton').addEventListener('click', () => {
       returnToUser(event); // Do nothing, close the CHAPI window
     });
+
     document.getElementById('confirmButton').addEventListener('click', () => {
       document.getElementById('userArea').classList.remove('hide');
       document.getElementById('confirm').classList.add('hide');
 
       storeInWallet(credential.data); // in mock-user-management.js
       refreshUserArea();
+    });
+
+    document.getElementById('doneButton').addEventListener('click', () => {
+      returnToUser(event);
     });
   }
 
