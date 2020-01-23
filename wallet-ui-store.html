@@ -90,8 +90,9 @@
     document.getElementById('confirmButton').addEventListener('click', () => {
       document.getElementById('userArea').classList.remove('hide');
       document.getElementById('confirm').classList.add('hide');
-      // Store the credential
-      // Update the UI
+
+      storeCredential(credential);
+      refreshUserArea();
     });
   }
 

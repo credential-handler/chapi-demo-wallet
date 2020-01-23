@@ -11,6 +11,7 @@ function login() {
 function logout() {
   resetCurrentUser();
   clearCredentialsList();
+  clearCredentialsStorage();
   refreshUserArea();
 }
 
@@ -29,20 +30,42 @@ function refreshUserArea() {
 
   // Refresh the user's list of credentials
   clearCredentialsList();
-  const credentials = loadCredentials() || ['none'];
+  const credentials = loadCredentials();
+
+  if(!credentials) {
+    return addToCredentialsList('none');
+  }
+
   for(const cred of credentials) {
-    addToCredentialsList(cred);
+    addToCredentialsList(`${cred.type} from ${cred.issuer}`);
   }
 }
 
 function loadCredentials() {
-  return null;
+  const storedCredentials = Cookies.get('credentials');
+  if(!storedCredentials) {
+    return null;
+  }
+  return JSON.parse(atob(storedCredentials));
+}
+
+function clearCredentialsStorage() {
+  Cookies.remove('credentials', {path: ''});
 }
 
 function clearCredentialsList() {
   const creds = document.getElementById('credentialsList');
   while(creds.firstChild)
     creds.removeChild(creds.firstChild);
+}
+
+function storeCredential(credential) {
+  const storedCredentials = loadCredentials() || [];
+  storedCredentials.push(credential.data);
+
+  // base64 encode the serialized credentials
+  const serialized = btoa(JSON.stringify(storedCredentials));
+  Cookies.set('credentials', serialized, {path: '', secure: true, sameSite: 'None'});
 }
 
 function addToCredentialsList(txt) {
@@ -59,12 +82,12 @@ function loadCurrentUser() {
 
 function saveCurrentUser(name) {
   console.log('Setting login cookie.');
-  Cookies.set('username', name, { path: '', secure: true, sameSite: 'None' });
+  Cookies.set('username', name, {path: '', secure: true, sameSite: 'None'});
 }
 
 function resetCurrentUser() {
   console.log('Clearing login cookie.');
-  Cookies.remove('username', { path: '' });
+  Cookies.remove('username', {path: ''});
 }
 
 
