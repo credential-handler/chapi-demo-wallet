@@ -99,7 +99,7 @@ function getCredentialId(vp) {
 
 function getCredentialType(vc) {
   const types = vc.type;
-  return types.slice[1].join('/');
+  return types.slice(1).join('/');
 }
 
 /**
