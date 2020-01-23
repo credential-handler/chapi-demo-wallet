@@ -46,7 +46,7 @@ function refreshUserArea() {
     const vc = Array.isArray(vp.verifiableCredential)
       ? vp.verifiableCredential[0]
       : vp.verifiableCredential;
-    addToWalletDisplay(`${vc.type} from ${vc.issuer}`);
+    addToWalletDisplay(`${getCredentialType(vc)} from ${vc.issuer}`);
   }
 }
 
@@ -95,6 +95,11 @@ function getCredentialId(vp) {
     ? vp.verifiableCredential[0]
     : vp.verifiableCredential;
   return vc.id;
+}
+
+function getCredentialType(vc) {
+  const types = vc.type;
+  return types.slice[1].join('/');
 }
 
 /**
