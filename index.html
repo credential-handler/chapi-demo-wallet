@@ -34,15 +34,21 @@
 
     <div class="card-panel hide" id="logged-in">
       <p>
-        <strong>Logged in:</strong>
-        <span id="username"></span>
+        <strong>Logged in:</strong> <span id="username"></span>
+
+        <h6>Stored Credentials:</h6>
+        <ul id="credentialsList"></ul>
       </p>
-      <a class="waves-effect waves-light btn" id="logoutButton">Logout</a>
+      <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
     </div>
 
     <div class="card-panel hide" id="logged-out">
       <p>
-        You are not logged in.
+        To start using the wallet, click the <strong>Login</strong> button.
+      </p>
+      <p>
+        For purposes of this demo, we will skip Registration and just use a
+        test account.
       </p>
       <a class="waves-effect waves-light btn" id="loginButton">Login</a>
     </div>
@@ -62,7 +68,7 @@
   onDocumentReady(() => {
     document.getElementById('loginButton').addEventListener('click', login);
     document.getElementById('logoutButton').addEventListener('click', logout);
-    refreshUsername();
+    refreshUserArea();
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

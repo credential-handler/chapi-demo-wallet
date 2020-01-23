@@ -3,8 +3,19 @@
  */
 'use strict'
 
-function refreshUsername() {
-  const currentUser = Cookies.get('username') || '';
+function login() {
+  saveCurrentUser('JaneDoe');
+  refreshUserArea();
+}
+
+function logout() {
+  resetCurrentUser();
+  clearCredentialsList();
+  refreshUserArea();
+}
+
+function refreshUserArea() {
+  const currentUser = loadCurrentUser();
   document.getElementById('username').innerHTML = currentUser;
 
   if(currentUser) {
@@ -15,16 +26,45 @@ function refreshUsername() {
     document.getElementById('logged-in').classList.add('hide');
     document.getElementById('logged-out').classList.remove('hide');
   }
+
+  // Refresh the user's list of credentials
+  clearCredentialsList();
+  const credentials = loadCredentials() || ['none'];
+  for(const cred of credentials) {
+    addToCredentialsList(cred);
+  }
 }
 
-function login() {
+function loadCredentials() {
+  return null;
+}
+
+function clearCredentialsList() {
+  const creds = document.getElementById('credentialsList');
+  while(creds.firstChild)
+    creds.removeChild(creds.firstChild);
+}
+
+function addToCredentialsList(txt) {
+  const li = document.createElement('li');
+  li.appendChild(document.createTextNode(txt));
+
+  document.getElementById('credentialsList')
+    .appendChild(li);
+}
+
+function loadCurrentUser() {
+  return Cookies.get('username') || '';
+}
+
+function saveCurrentUser(name) {
   console.log('Setting login cookie.');
-  Cookies.set('username', 'JaneDoe', { path: '', secure: true, sameSite: 'None' });
-  refreshUsername();
+  Cookies.set('username', name, { path: '', secure: true, sameSite: 'None' });
 }
 
-function logout() {
+function resetCurrentUser() {
   console.log('Clearing login cookie.');
   Cookies.remove('username', { path: '' });
-  refreshUsername();
 }
+
+
