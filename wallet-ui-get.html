@@ -86,6 +86,12 @@
     const requestReason = query.credentialQuery.reason;
     document.getElementById('requestReason').innerHTML = requestReason;
 
+    refreshUserArea({
+      shareButton: {
+        text: 'Share'
+      }
+    });
+
     // const requestOptions = event.credentialRequestOptions || {web:{}};
     // document.getElementById('queryContents').innerHTML = JSON.stringify(requestOptions.web, null, 2);
 
@@ -105,7 +111,6 @@
   onDocumentReady(() => {
     document.getElementById('loginButton').addEventListener('click', login);
     document.getElementById('logoutButton').addEventListener('click', logout);
-    refreshUserArea();
   })
 
   credentialHandlerPolyfill

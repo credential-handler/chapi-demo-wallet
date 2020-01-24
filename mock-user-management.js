@@ -19,7 +19,7 @@ function logout() {
   refreshUserArea();
 }
 
-function refreshUserArea() {
+function refreshUserArea({shareButton} = {}) {
   const currentUser = loadCurrentUser();
   document.getElementById('username').innerHTML = currentUser;
 
@@ -37,7 +37,7 @@ function refreshUserArea() {
   const walletContents = loadWalletContents();
 
   if(!walletContents) {
-    return addToWalletDisplay('none');
+    return addToWalletDisplay({text: 'none'});
   }
 
   for(const id in walletContents) {
@@ -46,7 +46,10 @@ function refreshUserArea() {
     const vc = Array.isArray(vp.verifiableCredential)
       ? vp.verifiableCredential[0]
       : vp.verifiableCredential;
-    addToWalletDisplay(`${getCredentialType(vc)} from ${vc.issuer}`);
+    addToWalletDisplay({
+      text: `${getCredentialType(vc)} from ${vc.issuer}`,
+      button: shareButton
+    });
   }
 }
 
@@ -82,9 +85,17 @@ function clearWalletDisplay() {
     contents.removeChild(contents.firstChild);
 }
 
-function addToWalletDisplay(description) {
+function addToWalletDisplay({text, button}) {
   const li = document.createElement('li');
-  li.appendChild(document.createTextNode(description));
+
+  if(button) {
+    const buttonNode = document.createElement('a');
+    buttonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
+    buttonNode.appendChild(document.createTextNode(button.text));
+    li.appendChild(buttonNode);
+  }
+
+  li.appendChild(document.createTextNode(' ' + text));
 
   document.getElementById('walletContents')
     .appendChild(li);
