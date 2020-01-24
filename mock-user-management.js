@@ -95,17 +95,19 @@ function addToWalletDisplay({text, vc, button}) {
     buttonNode.setAttribute('id', vc.id);
     buttonNode.appendChild(document.createTextNode(button.text));
     li.appendChild(buttonNode);
-
-    document.getElementById(vc.id).addEventListener('click', () => {
-      button.sourceEvent
-        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', vc}));
-    });
   }
 
   li.appendChild(document.createTextNode(' ' + text));
 
   document.getElementById('walletContents')
     .appendChild(li);
+
+  if(button) {
+    document.getElementById(vc.id).addEventListener('click', () => {
+      button.sourceEvent
+        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', vc}));
+    });
+  }
 }
 
 function getCredentialId(vp) {
