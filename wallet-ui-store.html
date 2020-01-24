@@ -97,7 +97,7 @@
 
     // Set up the event handlers for the buttons
     document.getElementById('cancelButton').addEventListener('click', () => {
-      returnToUser(event); // Do nothing, close the CHAPI window
+      returnToUser(event, 'canceled'); // Do nothing, close the CHAPI window
     });
 
     document.getElementById('confirmButton').addEventListener('click', () => {
@@ -109,13 +109,13 @@
     });
 
     document.getElementById('doneButton').addEventListener('click', () => {
-      returnToUser(event);
+      returnToUser(event, 'success');
     });
   }
 
-  function returnToUser(storeEvent) {
+  function returnToUser(storeEvent, status) {
     storeEvent.respondWith(new Promise(resolve => {
-      return resolve({dataType: 'Response', data: 'success'});
+      return resolve({dataType: 'Response', data: status});
     }))
   }
 
