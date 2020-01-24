@@ -48,6 +48,7 @@ function refreshUserArea({shareButton} = {}) {
       : vp.verifiableCredential;
     addToWalletDisplay({
       text: `${getCredentialType(vc)} from ${vc.issuer}`,
+      vc,
       button: shareButton
     });
   }
@@ -85,14 +86,20 @@ function clearWalletDisplay() {
     contents.removeChild(contents.firstChild);
 }
 
-function addToWalletDisplay({text, button}) {
+function addToWalletDisplay({text, vc, button}) {
   const li = document.createElement('li');
 
   if(button) {
     const buttonNode = document.createElement('a');
     buttonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
+    buttonNode.setAttribute('id', vc.id);
     buttonNode.appendChild(document.createTextNode(button.text));
     li.appendChild(buttonNode);
+
+    document.getElementById(vc.id).addEventListener('click', () => {
+      button.sourceEvent
+        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', vc}));
+    });
   }
 
   li.appendChild(document.createTextNode(' ' + text));
