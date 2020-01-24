@@ -104,8 +104,9 @@ function addToWalletDisplay({text, vc, button}) {
 
   if(button) {
     document.getElementById(vc.id).addEventListener('click', () => {
+      console.log('returning vc:', vc);
       button.sourceEvent
-        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', vc}));
+        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data: vc}));
     });
   }
 }
