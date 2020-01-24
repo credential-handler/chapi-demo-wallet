@@ -104,9 +104,17 @@ function addToWalletDisplay({text, vc, button}) {
 
   if(button) {
     document.getElementById(vc.id).addEventListener('click', () => {
-      console.log('returning vc:', vc);
+      const vp = {
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.w3.org/2018/credentials/examples/v1"
+        ],
+        "type": "VerifiablePresentation",
+        "verifiableCredential": vc
+      }
+      console.log('wrapping and returning vc:', vp);
       button.sourceEvent
-        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data: vc}));
+        .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data: vp}));
     });
   }
 }
