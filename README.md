@@ -12,8 +12,11 @@
 - [Commercial Support](#commercial-support)
 - [License](#license)
 
-Visit https://digitalbazaar.github.io/credential-handler-polyfill/demo/ 
-for an idea of what the basic handler UI looks like.
+Demos:
+
+1. [Demo Wallet](https://chapi-demo-wallet.digitalbazaar.com/)
+2. [Demo Issuer](https://chapi-demo-issuer.digitalbazaar.com/)
+3. [Demo Verifier](https://chapi-demo-verifier.digitalbazaar.com/)
 
 ## Background
 
