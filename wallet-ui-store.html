@@ -97,7 +97,7 @@
 
     // Set up the event handlers for the buttons
     document.getElementById('cancelButton').addEventListener('click', () => {
-      returnToUser(event, 'canceled'); // Do nothing, close the CHAPI window
+      returnToUser(event, null); // Do nothing, close the CHAPI window
     });
 
     document.getElementById('confirmButton').addEventListener('click', () => {
@@ -109,13 +109,20 @@
     });
 
     document.getElementById('doneButton').addEventListener('click', () => {
-      returnToUser(event, 'success');
+      returnToUser(event, vp);
     });
   }
 
-  function returnToUser(storeEvent, status) {
+  /**
+   * @param storeEvent
+   * @param {VerifiablePresentation|null} data - Return (to client application)
+   *   exactly what was stored, or a `null` if canceled by the user.
+   */
+  function returnToUser(storeEvent, data) {
     storeEvent.respondWith(new Promise(resolve => {
-      return resolve({dataType: 'Response', data: status});
+      return data
+        ? resolve({dataType: 'VerifiablePresentation', data})
+        : resolve(null);
     }))
   }
 
