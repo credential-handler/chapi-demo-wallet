@@ -17,12 +17,10 @@
     "url": "https://github.com/digitalbazaar/chapi-demo-wallet/issues"
   },
   "homepage": "https://github.com/digitalbazaar/chapi-demo-wallet",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "http-server": "^0.12.3"
   },
-  "files": [
-  ],
-  "scripts": {
-  }
+  "files": [],
+  "scripts": {}
 }
