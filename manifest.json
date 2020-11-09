@@ -1,4 +1,11 @@
 {
+  "icons": [
+    {
+      "sizes": "48x48 64x64",
+      "src": "demo-wallet.png",
+      "type": "image/png"
+    }
+  ],
   "name": "Demo Wallet",
   "short_name": "Demo Wallet"
 }
