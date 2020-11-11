@@ -22,5 +22,7 @@
     "http-server": "^0.12.3"
   },
   "files": [],
-  "scripts": {}
+  "scripts": {
+    "serve": "http-server . -S --cors -p 8081"
+  }
 }
