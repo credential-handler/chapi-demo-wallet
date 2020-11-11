@@ -25,7 +25,7 @@ Demos:
 ## Local Development
 
 1. Run `npm install`
-2. Run `./node_modules/.bin/http-server . -S --cors -p 8081`
+2. Run `npm run serve`
 3. Visit `https://chapi-demo-wallet.localhost:8081`
 
 ## Security
