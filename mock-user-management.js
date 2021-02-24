@@ -127,8 +127,9 @@ function getCredentialId(vp) {
 }
 
 function getCredentialType(vc) {
-  const types = vc.type;
-  return types.slice(1).join('/');
+  if (!vc) return 'Credential';
+  const types = Array.isArray(vc.type) ? vc.type : [vc.type];
+  return types.length > 1 ? types.slice(1).join('/') : types[0];
 }
 
 /**
