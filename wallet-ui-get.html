@@ -63,7 +63,7 @@
       <li>Click on a Share button next to an appropriate credential.</li>
     </ol>
 
-    <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+    <a class="waves-effect waves-light btn" id="connectButton">Connect</a>
   </div>
 </div>
 
@@ -121,8 +121,8 @@
   }
 
   onDocumentReady(() => {
-    document.getElementById('loginButton').addEventListener('click', login);
-    document.getElementById('logoutButton').addEventListener('click', logout);
+    document.getElementById('connectButton').addEventListener('click', connect);
+    document.getElementById('disconnectButton').addEventListener('click', disconnect);
   })
 
   credentialHandlerPolyfill

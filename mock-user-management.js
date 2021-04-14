@@ -9,7 +9,7 @@
 
 async function postData(url = '', data = {}) {
   // Default options are marked with *
-  const response = await fetch(url, {
+  return fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -22,7 +22,7 @@ async function postData(url = '', data = {}) {
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data) // body data type must match "Content-Type" header
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+  //return response.json(); // parses JSON response into native JavaScript objects
 }
 
 /**
@@ -76,8 +76,28 @@ async function refreshAgentArea({shareButton} = {}) {
  */
 
 async function loadWalletContents() {
-  const response = await postData(VERAMO_AGENT_BASE_URL + '/agent/dataStoreORMGetVerifiableCredentials');
-  return response;
+  const url = VERAMO_AGENT_BASE_URL + '/agent/dataStoreORMGetVerifiableCredentials';
+  const response = await postData(url);
+  return response.json();
+}
+
+async function createVerifiablePresentation({holder, verifiableCredential}) {
+
+  const data = 
+  {
+    presentation: {
+      holder: holder,
+      '@context': ['https://www.w3.org/2018/credentials/v1'],
+      type: ['VerifiablePresentation'],
+      issuanceDate: new Date().toISOString(),
+      verifiableCredential: [verifiableCredential],
+    },
+    proofFormat: 'jwt'
+  }  
+
+  const url = VERAMO_AGENT_BASE_URL + '/agent/createVerifiablePresentation';
+  const response = await postData(url, data);
+  return response.json();
 }
 
 function clearWalletStorage() {
@@ -115,37 +135,18 @@ function addToWalletDisplay({text, walletEntry, shareButton}) {
 
   const textNode = document.createElement('p');
   li.appendChild(textNode);
-
   textNode.appendChild(document.createTextNode(text));
-  //li.appendChild(document.createTextNode(' ' + text));
 
   document.getElementById('walletContents')
     .appendChild(li);
 
   if(shareButton) {
-    document.getElementById(walletEntry.hash).addEventListener('click', () => {
+    document.getElementById(walletEntry.hash).addEventListener('click', async () => {
 
-      const vpRequest = {
-        presentation: {
-          holder: walletEntry.verifiableCredential.credentialSubject.id,
-          verifier: [],
-          '@context': ['https://www.w3.org/2018/credentials/v1'],
-          type: ['VerifiablePresentation'],
-          issuanceDate: new Date().toISOString(),
-          verifiableCredential: [walletEntry.verifiableCredential],
-        },
-        proofFormat: 'jwt'
-      };
-      console.log('create VP request:', JSON.stringify(vpRequest));
+      const vp = await createVerifiablePresentation( 
+        { holder: walletEntry.verifiableCredential.credentialSubject.id,
+          verifiableCredential: walletEntry.verifiableCredential.proof.jwt });
 
-      const vp = {
-        "@context": [
-          "https://www.w3.org/2018/credentials/v1",
-          "https://www.w3.org/2018/credentials/examples/v1"
-        ],
-        "type": "VerifiablePresentation",
-        "verifiableCredential": walletEntry.verifiableCredential
-      }
       console.log('wrapping and returning vc:', vp);
 
       shareButton.sourceEvent
