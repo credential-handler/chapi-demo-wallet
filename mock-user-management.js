@@ -29,30 +29,29 @@ async function postData(url = '', data = {}) {
  * UI Management
  */
 
-async function login() {
-  alert('Sign-in with MetaMask')
-  saveCurrentUser('did:ethr:0x08090640fd8253ada21e1a18d1226bd04d704698');
-  await refreshUserArea();
+async function connect() {  
+  saveCurrentVeramoAgent(VERAMO_AGENT_BASE_URL);
+  await refreshAgentArea();
 }
 
-async function logout() {
-  resetCurrentUser();
+async function disconnect() {
+  resetCurrentVeramoAgent();
   clearWalletDisplay();
   clearWalletStorage();
-  await refreshUserArea();
+  await refreshAgentArea();
 }
 
-async function refreshUserArea({shareButton} = {}) {
-  const currentUser = loadCurrentUser();
-  document.getElementById('username').innerHTML = currentUser;
+async function refreshAgentArea({shareButton} = {}) {
+  const veramoAgentUrl = loadCurrentVeramoAgent();
+  document.getElementById('veramoAgent').innerHTML = veramoAgentUrl;
 
-  if(currentUser) {
-    document.getElementById('logged-in').classList.remove('hide');
-    document.getElementById('logged-out').classList.add('hide');
+  if(veramoAgentUrl) {
+    document.getElementById('connected').classList.remove('hide');
+    document.getElementById('disconnected').classList.add('hide');
   } else {
     // not logged in
-    document.getElementById('logged-in').classList.add('hide');
-    document.getElementById('logged-out').classList.remove('hide');
+    document.getElementById('connected').classList.add('hide');
+    document.getElementById('disconnected').classList.remove('hide');
   }
 
   // Refresh the user's list of wallet contents
@@ -67,7 +66,7 @@ async function refreshUserArea({shareButton} = {}) {
     addToWalletDisplay({
       text: `${getCredentialType(entry.verifiableCredential)} Verifiable Credential from issuer ${entry.verifiableCredential.issuer.id}`,
       walletEntry: entry,
-      button: shareButton
+      shareButton: shareButton
     });
   }
 }
@@ -91,23 +90,39 @@ function clearWalletDisplay() {
     contents.removeChild(contents.firstChild);
 }
 
-function addToWalletDisplay({text, walletEntry, button}) {
+function addToWalletDisplay({text, walletEntry, shareButton}) {
   const li = document.createElement('li');
 
-  if(button) {
-    const buttonNode = document.createElement('a');
-    buttonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
-    buttonNode.setAttribute('id', walletEntry.hash);
-    buttonNode.appendChild(document.createTextNode(button.text));
-    li.appendChild(buttonNode);
+  if(shareButton) {
+    const shareButtonNode = document.createElement('a');
+    shareButtonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
+    shareButtonNode.setAttribute('id', walletEntry.hash);
+    shareButtonNode.appendChild(document.createTextNode(shareButton.text));
+    li.appendChild(shareButtonNode);
+    li.appendChild(document.createTextNode(' '));
   }
+  
+  const showButtonNode = document.createElement('a');
+  showButtonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
+  showButtonNode.setAttribute('id', 'show-' + walletEntry.hash);
+  showButtonNode.appendChild(document.createTextNode('Show'));
+  li.appendChild(showButtonNode);
 
-  li.appendChild(document.createTextNode(' ' + text));
+  // jsonViewer defined in index.html/wallet-ui-get.html
+  showButtonNode.addEventListener('click', () => {
+    jsonViewer.showJSON(walletEntry.verifiableCredential, null, 1);
+  });    
+
+  const textNode = document.createElement('p');
+  li.appendChild(textNode);
+
+  textNode.appendChild(document.createTextNode(text));
+  //li.appendChild(document.createTextNode(' ' + text));
 
   document.getElementById('walletContents')
     .appendChild(li);
 
-  if(button) {
+  if(shareButton) {
     document.getElementById(walletEntry.hash).addEventListener('click', () => {
 
       const vpRequest = {
@@ -133,7 +148,7 @@ function addToWalletDisplay({text, walletEntry, button}) {
       }
       console.log('wrapping and returning vc:', vp);
 
-      button.sourceEvent
+      shareButton.sourceEvent
         .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data: vp}));
     });
   }
@@ -151,16 +166,16 @@ function getCredentialType(vc) {
  * User Storage / Persistence
  */
 
-function loadCurrentUser() {
-  return Cookies.get('username') || '';
+function loadCurrentVeramoAgent() {
+  return Cookies.get('veramoAgent') || '';
 }
 
-function saveCurrentUser(name) {
-  console.log('Setting login cookie.');
-  Cookies.set('username', name, {path: '', secure: true, sameSite: 'None'});
+function saveCurrentVeramoAgent(url) {
+  console.log('Setting veramoAgent cookie.');
+  Cookies.set('veramoAgent', url, {path: '', secure: true, sameSite: 'None'});
 }
 
-function resetCurrentUser() {
-  console.log('Clearing login cookie.');
-  Cookies.remove('username', {path: ''});
+function resetCurrentVeramoAgent() {
+  console.log('Clearing veramoAgent cookie.');
+  Cookies.remove('veramoAgent', {path: ''});
 }

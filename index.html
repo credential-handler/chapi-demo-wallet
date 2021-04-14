@@ -19,6 +19,10 @@
   <script src="install-wallet.js"></script>
   <script src="mock-user-management.js"></script>
 
+  <!--JSON viewer-->
+  <script type="text/javascript" src="json-viewer.js"></script>
+  <link rel="stylesheet" type="text/css" href="json-viewer.css">
+
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 </head>
@@ -32,25 +36,33 @@
       browser, and now it can act as a test wallet.
     </p>
 
-    <div class="card-panel hide" id="logged-in">
+    <div class="card-panel hide" id="connected">
       <p>
-        <strong>Logged in:</strong> <span id="username"></span>
+        <strong>Connected agent:</strong> <span id="veramoAgent"></span>
 
         <h6>Wallet Contents:</h6>
         <ol id="walletContents"></ol>
+
+        <h6>Verifiable Credential:</h6>
+        <div id="json"></div>
+
+        <script>
+          var jsonViewer = new JSONViewer();
+          document.querySelector("#json").appendChild(jsonViewer.getContainer());
+        </script>      
+  
       </p>
-      <a class="waves-effect waves-light btn" id="logoutButton">Reset and Logout</a>
+      <a class="waves-effect waves-light btn" id="disconnectButton">Reset and Disconnect</a>
     </div>
 
-    <div class="card-panel hide" id="logged-out">
+    <div class="card-panel hide" id="disconnected">
       <p>
-        To start using the wallet, click the <strong>Login</strong> button.
+        To start using the wallet, click the <strong>Connect</strong> button.
       </p>
       <p>
-        For purposes of this demo, we will skip Registration and just use a
-        test account.
+        For purposes of this demo, we will skip configuration of the Agent.
       </p>
-      <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+      <a class="waves-effect waves-light btn" id="connectButton">Connect</a>
     </div>
   </div>
 </div>
@@ -63,12 +75,13 @@
   registerWalletWithBrowser()
     .catch(e => console.error('Error in registerWalletWithBrowser:', e));
 
+
   // Set up the UI / button events.
   // `onDocumentReady` helper function is defined in ./js-helpers.js
   onDocumentReady(() => {
-    document.getElementById('loginButton').addEventListener('click', login);
-    document.getElementById('logoutButton').addEventListener('click', logout);
-    refreshUserArea();
+    document.getElementById('connectButton').addEventListener('click', connect);
+    document.getElementById('disconnectButton').addEventListener('click', disconnect);
+    refreshAgentArea();
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

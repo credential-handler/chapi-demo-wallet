@@ -16,6 +16,10 @@
   <script src="js-helpers.js"></script>
   <script src="mock-user-management.js"></script>
 
+  <!--JSON viewer-->
+  <script type="text/javascript" src="json-viewer.js"></script>
+  <link rel="stylesheet" type="text/css" href="json-viewer.css">
+
   <!--Simple cookie lib-->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 </head>
@@ -24,23 +28,31 @@
 <div class="container">
   <h5>Wallet get() event</h5>
 
-  <div class="card-panel hide" id="logged-in">
+  <div class="card-panel hide" id="connected">
     <div id="confirm">
       <p>Origin <span id="requestOrigin"></span> is requesting information:</p>
 
       <p><span id="requestReason"></span></p>
     </div>
 
-    <div id="userArea">
-      <p><strong>Logged in:</strong> <span id="username"></span></p>
-      <a class="waves-effect waves-light btn-small" id="logoutButton">Reset and Logout</a>
+    <div id="agentArea">
+      <p><strong>Connected agent:</strong> <span id="veramoAgent"></span></p>
+      <a class="waves-effect waves-light btn" id="disconnectButton">Reset and Disconnect</a>
 
       <h6>Wallet Contents:</h6>
       <ol id="walletContents"></ol>
+
+      <h6>Verifiable Credential:</h6>
+      <div id="json"></div>
+
+      <script>
+        var jsonViewer = new JSONViewer();
+        document.querySelector("#json").appendChild(jsonViewer.getContainer());
+      </script>      
     </div>
   </div>
 
-  <div class="card-panel hide" id="logged-out">
+  <div class="card-panel hide" id="disconnected">
     <p>
       In order to share a credential with the requesting party:
     </p>
@@ -48,7 +60,7 @@
     <ol>
       <li>Register a wallet with your browser (for example,
         the <a href="https://chapi-demo-wallet.digitalbazaar.com/">Demo Wallet</a>).</li>
-      <li>Click the <strong>Login</strong> button.</li>
+      <li>Click the <strong>Connect</strong> button.</li>
       <li>Click on a Share button next to an appropriate credential.</li>
     </ol>
 
@@ -86,10 +98,10 @@
     const requestReason = query.credentialQuery.reason;
     document.getElementById('requestReason').innerHTML = requestReason;
 
-    refreshUserArea({
+    refreshAgentArea({
       shareButton: {
         text: 'Share',
-        sourceEvent: event
+        sourceEvent: event        
       }
     });
 
