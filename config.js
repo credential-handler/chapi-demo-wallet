@@ -12,3 +12,5 @@ const MEDIATOR = 'https://authn.io/mediator' + '?origin=' +
   encodeURIComponent(window.location.origin);
 
 const WALLET_LOCATION = window.location.origin + '/';
+
+const VERAMO_AGENT_BASE_URL = 'https://50b2011ad547.ngrok.io';

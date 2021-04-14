@@ -4,22 +4,45 @@
 'use strict'
 
 /**
+ * Helper function
+ */
+
+async function postData(url = '', data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+/**
  * UI Management
  */
 
-function login() {
-  saveCurrentUser('JaneDoe');
-  refreshUserArea();
+async function login() {
+  alert('Sign-in with MetaMask')
+  saveCurrentUser('did:ethr:0x08090640fd8253ada21e1a18d1226bd04d704698');
+  await refreshUserArea();
 }
 
-function logout() {
+async function logout() {
   resetCurrentUser();
   clearWalletDisplay();
   clearWalletStorage();
-  refreshUserArea();
+  await refreshUserArea();
 }
 
-function refreshUserArea({shareButton} = {}) {
+async function refreshUserArea({shareButton} = {}) {
   const currentUser = loadCurrentUser();
   document.getElementById('username').innerHTML = currentUser;
 
@@ -34,21 +57,16 @@ function refreshUserArea({shareButton} = {}) {
 
   // Refresh the user's list of wallet contents
   clearWalletDisplay();
-  const walletContents = loadWalletContents();
+  const walletContents = await loadWalletContents();
 
   if(!walletContents) {
     return addToWalletDisplay({text: 'none'});
   }
 
-  for(const id in walletContents) {
-    const vp = walletContents[id];
-    // TODO: Add support for multi-credential VPs
-    const vc = Array.isArray(vp.verifiableCredential)
-      ? vp.verifiableCredential[0]
-      : vp.verifiableCredential;
+  for(const entry of walletContents) {
     addToWalletDisplay({
-      text: `${getCredentialType(vc)} from ${vc.issuer}`,
-      vc,
+      text: `${getCredentialType(entry.verifiableCredential)} Verifiable Credential from issuer ${entry.verifiableCredential.issuer.id}`,
+      walletEntry: entry,
       button: shareButton
     });
   }
@@ -58,26 +76,13 @@ function refreshUserArea({shareButton} = {}) {
  * Wallet Storage / Persistence
  */
 
-function loadWalletContents() {
-  const walletContents = Cookies.get('walletContents');
-  if(!walletContents) {
-    return null;
-  }
-  return JSON.parse(atob(walletContents));
+async function loadWalletContents() {
+  const response = await postData(VERAMO_AGENT_BASE_URL + '/agent/dataStoreORMGetVerifiableCredentials');
+  return response;
 }
 
 function clearWalletStorage() {
   Cookies.remove('walletContents', {path: ''});
-}
-
-function storeInWallet(verifiablePresentation) {
-  const walletContents = loadWalletContents() || {};
-  const id = getCredentialId(verifiablePresentation);
-  walletContents[id] = verifiablePresentation;
-
-  // base64 encode the serialized contents (verifiable presentations)
-  const serialized = btoa(JSON.stringify(walletContents));
-  Cookies.set('walletContents', serialized, {path: '', secure: true, sameSite: 'None'});
 }
 
 function clearWalletDisplay() {
@@ -86,13 +91,13 @@ function clearWalletDisplay() {
     contents.removeChild(contents.firstChild);
 }
 
-function addToWalletDisplay({text, vc, button}) {
+function addToWalletDisplay({text, walletEntry, button}) {
   const li = document.createElement('li');
 
   if(button) {
     const buttonNode = document.createElement('a');
     buttonNode.classList.add('waves-effect', 'waves-light', 'btn-small');
-    buttonNode.setAttribute('id', vc.id);
+    buttonNode.setAttribute('id', walletEntry.hash);
     buttonNode.appendChild(document.createTextNode(button.text));
     li.appendChild(buttonNode);
   }
@@ -103,27 +108,35 @@ function addToWalletDisplay({text, vc, button}) {
     .appendChild(li);
 
   if(button) {
-    document.getElementById(vc.id).addEventListener('click', () => {
+    document.getElementById(walletEntry.hash).addEventListener('click', () => {
+
+      const vpRequest = {
+        presentation: {
+          holder: walletEntry.verifiableCredential.credentialSubject.id,
+          verifier: [],
+          '@context': ['https://www.w3.org/2018/credentials/v1'],
+          type: ['VerifiablePresentation'],
+          issuanceDate: new Date().toISOString(),
+          verifiableCredential: [walletEntry.verifiableCredential],
+        },
+        proofFormat: 'jwt'
+      };
+      console.log('create VP request:', JSON.stringify(vpRequest));
+
       const vp = {
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
           "https://www.w3.org/2018/credentials/examples/v1"
         ],
         "type": "VerifiablePresentation",
-        "verifiableCredential": vc
+        "verifiableCredential": walletEntry.verifiableCredential
       }
       console.log('wrapping and returning vc:', vp);
+
       button.sourceEvent
         .respondWith(Promise.resolve({dataType: 'VerifiablePresentation', data: vp}));
     });
   }
-}
-
-function getCredentialId(vp) {
-  const vc = Array.isArray(vp.verifiableCredential)
-    ? vp.verifiableCredential[0]
-    : vp.verifiableCredential;
-  return vc.id;
 }
 
 function getCredentialType(vc) {
@@ -151,4 +164,3 @@ function resetCurrentUser() {
   console.log('Clearing login cookie.');
   Cookies.remove('username', {path: ''});
 }
-

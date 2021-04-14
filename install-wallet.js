@@ -41,8 +41,7 @@ async function registerWalletWithBrowser() {
   await registration.credentialManager.hints.set(
     'test', {
       name: 'TestUser',
-      enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
-      // enabledTypes: ['VerifiablePresentation']
+      enabledTypes: ['VerifiablePresentation', 'VerifiableCredential']
     });
 
   console.log('Wallet registered.');
