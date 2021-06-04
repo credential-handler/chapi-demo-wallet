@@ -9,7 +9,7 @@
   "name": "Demo Wallet",
   "short_name": "Demo Wallet",
   "credential_handler": {
-    "url": "https://chapi-demo-wallet.digitalbazaar.com/wallet-worker.html",
+    "url": "/wallet-worker.html",
     "enabledTypes": ["VerifiablePresentation"]
   }
 }
