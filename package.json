@@ -1,6 +1,6 @@
 {
   "name": "chapi-demo-wallet",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Credential Handler API Demo Issuer",
   "main": "index.js",
   "repository": {
