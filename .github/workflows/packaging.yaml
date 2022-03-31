@@ -2,10 +2,8 @@ name: Packaging
 
 on:
   push:
-    branches:
-      - docker
-    # tags:
-    #   - v*
+    tags:
+      - v*
 
 jobs:
   package:
