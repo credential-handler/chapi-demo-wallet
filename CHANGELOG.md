@@ -1,6 +1,6 @@
 # chapi-demo-wallet Changelog
 
-## 1.1.0 - TBD
+## 1.1.0 - 2022-04-01
 
 ### Added
 - Add `.htaccess` file to enable CORS.
