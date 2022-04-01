@@ -1,5 +1,10 @@
 # chapi-demo-wallet Changelog
 
+## 1.1.1 - TBD
+
+### Fixed
+- Override `httpd.conf` to enable CORS.
+
 ## 1.1.0 - 2022-04-01
 
 ### Added
