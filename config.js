@@ -8,7 +8,7 @@
  * wallets, etc).
  */
 
-const MEDIATOR = 'https://authn.io/mediator' + '?origin=' +
+const MEDIATOR = 'https://authn.localhost:33443/mediator' + '?origin=' +
   encodeURIComponent(window.location.origin);
 
 const WALLET_LOCATION = window.location.origin + '/';
