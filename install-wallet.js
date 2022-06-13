@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
 /* global navigator, window, document */
 'use strict';
@@ -22,7 +22,6 @@
  *      Utility/convenience library for the CHAPI polyfill, useful for wallet
  *      implementors.
  */
-
 const workerUrl = WALLET_LOCATION + 'wallet-worker.html';
 
 async function registerWalletWithBrowser() {
@@ -33,17 +32,12 @@ async function registerWalletWithBrowser() {
   }
 
   console.log('Polyfill loaded.');
-
   console.log('Installing wallet worker handler at:', workerUrl);
 
-  const registration = await WebCredentialHandler.installHandler({url: workerUrl});
-
-  await registration.credentialManager.hints.set(
-    'test', {
-      name: 'TestUser',
-      enabledTypes: ['VerifiablePresentation', 'VerifiableCredential', 'AlumniCredential']
-      // enabledTypes: ['VerifiablePresentation']
-    });
-
-  console.log('Wallet registered.');
+  try {
+    await WebCredentialHandler.installHandler();
+    console.log('Wallet installed.');
+  } catch(e) {
+    console.error('Wallet installation failed', e);
+  }
 }
