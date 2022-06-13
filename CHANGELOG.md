@@ -1,5 +1,10 @@
 # chapi-demo-wallet Changelog
 
+## 1.1.3 - 2022-06-13
+
+### Changed
+- Use credential-handler-polyfill@2.3.1 for all html files.
+
 ## 1.1.2 - 2022-06-13
 
 ### Fixed
