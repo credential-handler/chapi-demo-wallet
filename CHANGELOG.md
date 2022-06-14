@@ -1,5 +1,10 @@
 # chapi-demo-wallet Changelog
 
+## 1.2.0 - 2022-06-xx
+
+### Added
+- Add meta element to html to account for mobile viewport width.
+
 ## 1.1.3 - 2022-06-13
 
 ### Changed
