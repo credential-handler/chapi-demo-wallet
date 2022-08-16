@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalbazaar/chapi-demo-wallet.git"
+    "url": "https://github.com/credential-handler/chapi-demo-wallet.git"
   },
   "author": {
     "name": "Digital Bazaar, Inc.",
@@ -14,9 +14,9 @@
   },
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/digitalbazaar/chapi-demo-wallet/issues"
+    "url": "https://github.com/credential-handler/chapi-demo-wallet/issues"
   },
-  "homepage": "https://github.com/digitalbazaar/chapi-demo-wallet",
+  "homepage": "https://github.com/credential-handler/chapi-demo-wallet",
   "dependencies": {},
   "devDependencies": {
     "http-server": "^0.12.3"
