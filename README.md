@@ -30,7 +30,7 @@ Demos:
 
 ## Security
 
-See https://github.com/digitalbazaar/credential-handler-polyfill#security
+See https://github.com/credential-handler/credential-handler-polyfill#security
 
 ## Contribute
 
