@@ -14,9 +14,9 @@
 
 Demos:
 
-1. [Demo Wallet](https://chapi-demo-wallet.digitalbazaar.com/)
-2. [Demo Issuer](https://chapi-demo-issuer.digitalbazaar.com/)
-3. [Demo Verifier](https://chapi-demo-verifier.digitalbazaar.com/)
+1. [Demo Wallet](https://wallet.example.chapi.io/)
+2. [Demo Issuer](https://issuer.example.chapi.io/)
+3. [Demo Verifier](https://verifier.example.chapi.io/)
 
 ## Background
 
@@ -48,4 +48,4 @@ Digital Bazaar: support@digitalbazaar.com
 
 ## License
 
-[New BSD License (3-clause)](LICENSE) © 2020 Digital Bazaar
+[New BSD License (3-clause)](LICENSE) © 2020-2022 Digital Bazaar
