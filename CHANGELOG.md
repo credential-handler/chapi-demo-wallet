@@ -1,5 +1,10 @@
 # chapi-demo-wallet Changelog
 
+## 2.0.0 - TBD
+
+### Changed
+- Set `MEDIATOR=authnio.qa.authorization.io`.
+
 ## 1.2.0 - 2022-06-14
 
 ### Added
