@@ -1,6 +1,6 @@
 # chapi-demo-wallet Changelog
 
-## 2.0.1 - 2022-11-dd
+## 2.0.1 - 2022-11-09
 
 ### Changed
 - Use `credential-handler-polyfill@3.0.1`.
