@@ -1,5 +1,10 @@
 # chapi-demo-wallet Changelog
 
+## 2.0.3 - 2023-03-xx
+
+### Changed
+- Upgrade `docker` actions in packaging workflow.
+
 ## 2.0.2 - 2022-11-17
 
 ### Changed
