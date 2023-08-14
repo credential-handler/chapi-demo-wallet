@@ -94,7 +94,7 @@
       ? vp.verifiableCredential[0]
       : vp.verifiableCredential;
     document.getElementById('credentialType').innerHTML = getCredentialType(vc);
-    document.getElementById('credentialIssuer').innerHTML = vc.issuer;
+    document.getElementById('credentialIssuer').innerHTML = vc.issuer.id;
 
     // Set up the event handlers for the buttons
     document.getElementById('cancelButton').addEventListener('click', () => {
