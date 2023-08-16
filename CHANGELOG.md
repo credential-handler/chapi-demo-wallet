@@ -1,6 +1,6 @@
 # chapi-demo-wallet Changelog
 
-## 2.0.4 - 2023-08-16
+## 2.0.4 - 2023-08-dd
 
 ### Changed
 - Output Issuer ID on credential storage confirmation screen.
