@@ -1,9 +1,11 @@
 # chapi-demo-wallet Changelog
 
-## 2.0.4 - 2023-08-dd
+## 2.0.4 - 2023-08-16
 
-### Changed
-- Output Issuer ID on credential storage confirmation screen.
+### Fixed
+- Handle displaying a VC's issuer ID in both cases: one where the `issuer`
+  value is an object (with an `id` property) and the other where it is
+  a string with the ID.
 
 ## 2.0.3 - 2023-03-10
 
