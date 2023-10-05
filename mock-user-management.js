@@ -59,7 +59,7 @@ function refreshUserArea({shareButton} = {}) {
  */
 
 function loadWalletContents() {
-  const walletContents = Cookies.get('walletContents');
+  const walletContents = localStorage.getItem('walletContents');
   if(!walletContents) {
     return null;
   }
@@ -67,7 +67,7 @@ function loadWalletContents() {
 }
 
 function clearWalletStorage() {
-  Cookies.remove('walletContents', {path: ''});
+  localStorage.removeItem('walletContents');
 }
 
 function storeInWallet(verifiablePresentation) {
@@ -77,7 +77,7 @@ function storeInWallet(verifiablePresentation) {
 
   // base64 encode the serialized contents (verifiable presentations)
   const serialized = btoa(JSON.stringify(walletContents));
-  Cookies.set('walletContents', serialized, {path: '', secure: true, sameSite: 'None'});
+  localStorage.setItem('walletContents', serialized);
 }
 
 function clearWalletDisplay() {
