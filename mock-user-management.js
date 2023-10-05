@@ -139,16 +139,16 @@ function getCredentialType(vc) {
  */
 
 function loadCurrentUser() {
-  return Cookies.get('username') || '';
+  return localStorage.getItem('walletUsername') || '';
 }
 
 function saveCurrentUser(name) {
-  console.log('Setting login cookie.');
-  Cookies.set('username', name, {path: '', secure: true, sameSite: 'None'});
+  console.log('Setting login in localStorage.');
+  localStorage.setItem('walletUsername', name);
 }
 
 function resetCurrentUser() {
-  console.log('Clearing login cookie.');
-  Cookies.remove('username', {path: ''});
+  console.log('Clearing login localStorage.');
+  localStorage.removeItem('walletUsername');
 }
 
