@@ -63,7 +63,7 @@ function loadWalletContents() {
   if(!walletContents) {
     return null;
   }
-  return JSON.parse(atob(walletContents));
+  return JSON.parse(walletContents);
 }
 
 function clearWalletStorage() {
@@ -74,10 +74,7 @@ function storeInWallet(verifiablePresentation) {
   const walletContents = loadWalletContents() || {};
   const id = getCredentialId(verifiablePresentation);
   walletContents[id] = verifiablePresentation;
-
-  // base64 encode the serialized contents (verifiable presentations)
-  const serialized = btoa(JSON.stringify(walletContents));
-  localStorage.setItem('walletContents', serialized);
+  localStorage.setItem('walletContents', JSON.stringify(walletContents));
 }
 
 function clearWalletDisplay() {
