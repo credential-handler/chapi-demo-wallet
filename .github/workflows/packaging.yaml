@@ -2,6 +2,8 @@ name: Packaging
 
 on:
   push:
+    branches:
+      - pkg-*
     tags:
       - v*
 
@@ -14,13 +16,13 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: Check out repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Get npm package version
       id: version
-      uses: martinbeentjes/npm-get-version-action@v1.0.0
+      uses: digitalbazaar/npm-get-version-action@v1
     - name: Generate next release candidate number
       id: rc
-      uses: zyborg/gh-action-buildnum@v1.1.0
+      uses: digitalbazaar/gh-action-buildnum@v2
       with:
         gist_token: ${{ secrets.DB_BUILDER_CI_TOKEN }}
         version_key: ${{ steps.version.outputs.current-version }}
@@ -43,7 +45,7 @@ jobs:
           MEDIATOR=authnio.qa.authorization.io
         push: true
         provenance: false
-        tags: us.gcr.io/${{ env.CONTAINER_OWNER }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ steps.version.outputs.current-version }}-rc${{ steps.rc.outputs.version_build_number }}
+        tags: us.gcr.io/${{ env.CONTAINER_OWNER }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ steps.version.outputs.current-version }}-${{ github.ref_name }}-${{ github.sha }}-rc${{ steps.rc.outputs.version_build_number }}
 
     - name: Display Docker image
       run: echo "${{ steps.build_push_action.outputs.metadata }}"
